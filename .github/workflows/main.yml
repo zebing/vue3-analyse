@@ -22,7 +22,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - run: npm run deploy:github
+    - run: npm run deploy
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         REPRO: zebing/vue3-analyse
