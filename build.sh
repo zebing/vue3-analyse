@@ -31,7 +31,7 @@ fi
 
 echo "==> Starting deploying"
 
-DEPLOY_REPO="https://username:${ACCESS_TOKEN}@github.com/zebing/knownledge.git"
+DEPLOY_REPO="https://username:${ACCESS_TOKEN}@github.com/zebing/vue3-analyse.git"
 
 git add .
 git commit -m "deploy"
