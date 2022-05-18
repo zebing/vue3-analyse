@@ -1,7 +1,7 @@
 {
   "name": "vue3-analyse",
   "version": "1.0.0",
-  "description": "vue3 技术揭秘",
+  "description": "vue3 技术原理",
   "main": "index.js",
   "scripts": {
     "dev": "vuepress dev docs",
