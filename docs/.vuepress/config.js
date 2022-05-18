@@ -1,4 +1,7 @@
 module.exports = {
+  plugins: [
+    require('../../plugins'),
+  ],
   base: '/vue3-analyse/',
   dest: 'dist',
   title: 'vue3 技术揭秘',
