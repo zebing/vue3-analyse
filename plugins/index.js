@@ -1,36 +1,35 @@
 const glob = require('glob');
+const path = require('path');
 
 module.exports = (options, ctx) => {
-  const paths = glob.sync('docs/**/*');
-  const mdPaths = paths.filter((path) => /(?<!index)(?<!docs\/README)\.md$/.test(path));
-  const slideConfig = mdPaths.reduce((obj, path) => {
-    const pathArr = path.replace(/README.md/gi, '').split('/');
-    pathArr[0] = `/${pathArr[0]}/`;
-
-    if (!obj[pathArr[0]]) {
-      obj[pathArr[0]] = [];
-    }
-
-    let item = obj[pathArr[0]].filter((item) => item.key === pathArr[1])[0];
-
-    if (!item) {
-      item = {
-        title: pathArr[1].replace(/^[0-9]+/gi, ''),
-        collapsable: true,
-        key: pathArr[1],
-        children: []
-      }
-      obj[pathArr[0]].push(item);
-    }
-
-    item.children.push(pathArr.slice(1).join('/'));
-    return obj;
-  }, {})
-  const sidebar = [];
-  Object.keys(slideConfig).forEach((key) => {
-    slideConfig[key].map((item) => {
-      sidebar.push(item.children.length === 1 ? item.children[0] : item)
-    })
+  const paths = glob.sync('**/*.md', {
+    cwd: path.resolve(process.cwd(), 'docs'),
   });
-  ctx.themeConfig.sidebar['/'] = ['', ...sidebar];
+  const mdPaths = paths.filter((path) => /(?<!index)(?<!README)\.md$/.test(path));
+  const slideConfig = mdPaths.reduce((obj, path) => {
+    let [folder] = path.split('/');
+    folder = folder.replace(/^[0-9]+/gi, '');
+
+    if (!obj[folder]) {
+      obj[folder] = [];
+    }
+
+    obj[folder].push(path);
+    return obj;
+  }, {});
+  const sidebar = ctx.themeConfig.sidebar['/'] = [''];
+
+  for (let prop in slideConfig) {
+    let item = slideConfig[prop];
+    
+    if (item.length !== 1) {
+      item[0] = {
+        title: prop,
+        collapsable: true,
+        children: [...item]
+      }
+    }
+
+    sidebar.push(item[0]);
+  }
 }
