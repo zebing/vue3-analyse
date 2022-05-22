@@ -1,4 +1,4 @@
-# vue3 目录结构
+# 目录结构
 
 在正式进入源码之前，先看一下项目的整体结构。对项目结构有一个清晰全面的了解。
 
@@ -171,7 +171,7 @@
 │   ├── ref-macros.d.ts
 │   ├── server-renderer
 │   └── src
-└── vue-compat         // 是Vue 3的一个构建，提供了可配置的Vue 2兼容行为
+└── vue-compat         // 是 Vue3 的一个构建，提供了可配置的 Vue2 兼容行为
     ├── LICENSE
     ├── README.md
     ├── __tests__
@@ -180,3 +180,26 @@
     ├── package.json
     └── src
 ```
+
+## 编译
+有四个跟编译相关的包。分别是 `compiler-core`， `compiler-dom`， `compiler-sfc` 和 `compiler-ssr`。
+* **compiler-core** 核心编译包，会将组件代码编译成 ast 树，再生成运行时代码。
+* **compiler-dom** 解析 html 模版代码，v-model，v-on，style 等。
+* **compiler-ssr** 将 server 端代码编译成字符串，优化 server 运行性能。
+* **compiler-sfc** 编译 `.vue` 组件，将 vue 模版文件代码编译成可运行的 js 代码。
+
+它们的引用关系如下：
+
+![compiler core](../.vuepress/assets/compiler-core.png)
+
+## 运行
+组件代码实际运行相关的包。
+
+* **runtime-core** 核心运行包，组件的初始化，更新，卸载，diff 算法等。
+* **runtime-dom** dom 相关操作代码，dom 的创建，更新，卸载，事件监听等。
+* **runtime-test** vue 自己的测试包，性能比 jsdom 更优。
+* **server-renderer** ssr 将 vue 代码通过 renderToString 渲染成 html 字符串返回给浏览器运行。
+
+## 响应式
+
+* **reactivity** 响应式代码，将组件 data 添加 proxy 监控。

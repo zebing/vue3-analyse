@@ -4,7 +4,7 @@ module.exports = {
   ],
   base: '/vue3-analyse/',
   dest: 'dist',
-  title: 'vue3 技术揭秘',
+  title: 'vue3 技术原理',
   description: 'Analysis vue.js deeply',
   head: [
     ['link', { rel: 'icon', href: `/logo.png` }],
