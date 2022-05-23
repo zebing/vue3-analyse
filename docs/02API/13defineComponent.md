@@ -1,1 +1,1 @@
-# DefineComponent
+# defineComponent
