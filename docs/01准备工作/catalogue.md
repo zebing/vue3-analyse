@@ -190,7 +190,7 @@
 
 它们的引用关系如下：
 
-![compiler core](../.vuepress/assets/compiler-core.png)
+![compiler core](../.vuepress/assets/1-1.png)
 
 ## 运行
 组件代码实际运行相关的包。
