@@ -1,6 +1,6 @@
 # computed
 
-computed 计算属性主要用在对多个 state 返回一个结果的情况。跟 watch 的区别是，当多个值改变引起一个值改变的时候用 computed，当一个值改变引起多个值改变的时候，用 watch。
+computed 计算属性主要用在对多个 state 返回一个结果的情况。跟 watch 的区别是，当多个值改变引起一个值改变的时候用 computed，当一个值改变引起多个值改变的时候，用 watch。初始化在生命周期 beforeCreate 之后，created 之前。
 
 [传送门](https://github.com/vuejs/core/blob/3cfe5f9fc8b20e096ace2372bfbe58a2f0f0d5ad/packages/runtime-core/src/componentOptions.ts#L693)
 ```javascript
