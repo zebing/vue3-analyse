@@ -1,6 +1,6 @@
 # data
 
-data 是 Options 组件状态声明的主要方式，该函数返回组件实例的 data 对象，当函数为箭头函数时，不能通过 this 访问组件的实例，但是可以通过该函数的第一个参数访问。
+data 是 Options 组件状态声明的主要方式，该函数返回组件实例的 data 对象，当函数为箭头函数时，不能通过 this 访问组件的实例，但是可以通过该函数的第一个参数访问。初始化在生命周期 beforeCreate 之后，created 之前。
 
 [传送门](https://github.com/vuejs/core/blob/7487d507756e032372d94bb6f362ab7deea747a6/packages/runtime-core/src/componentOptions.ts#L654)
 ```javascript
