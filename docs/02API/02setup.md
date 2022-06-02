@@ -138,6 +138,9 @@ export function handleSetupResult(
   finishComponentSetup(instance, isSSR)
 }
 ```
-当组件传了 setup 选项之后，直接执行 setup 函数获取返回的结果 setupResult。setup 函数有两个参数，分别是 props 和 context。第二个参数 context 提供了一个上下文对象，该对象暴露了多个可能在 setup 中有用的对象和函数。
+组件传了 setup 选项之后，直接执行 setup 函数获取返回的结果 setupResult。setup 函数有两个参数，分别是 props 和 context。第二个参数 context 提供了一个上下文对象，该对象暴露了多个可能在 setup 中有用的对象和函数。
 
-拿到函数结果之后
+当 setupResult 返回的是 promise 对象时，会把当前组件当成懒加载组件看待，直接把 setupResult 赋值到组件的 asyncDep 上面，供 Suspense 组件来执行该组件后续的创建和渲染操作。
+
+当 setupResult 为非 promise 对象时，执行 handleSetupResult 方法处理返回的结果。如果返回的时函数，默认当成 render 方法，直接挂到实例 `instance.render` 上。如果是对象，就当成当前组件的 state 。最后调用 finishComponentSetup 完成组件的初始化。
+
