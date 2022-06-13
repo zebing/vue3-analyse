@@ -66,4 +66,4 @@ function createReactiveObject(
 在 createReactiveObject 方法中，主要调用 Proxy 对 target 进行代理监控，会传入 baseHandlers 对象。
 
 ## 依赖搜集
-在组件初始化完成之后，接下来会进行视图的渲染，渲染过程中会获取data信息，由于 data 已经被添加 Proxy 代理，当我们访问这个对象属性的时候，就会触发 baseHandlers 对象的 get 方法，继而触发依赖搜集。
+在组件初始化完成之后，接下来会进行视图的渲染，渲染过程中会获取data信息，由于 data 已经被添加 Proxy 代理，当我们访问这个对象属性的时候，就会触发 baseHandlers 对象的 getter 方法，继而触发 [track](/03响应式/01effect.html#track) 依赖搜集。
