@@ -15,6 +15,7 @@ module.exports = {
   serviceWorker: false,
   themeConfig: {
     repo: 'zebing/vue3-analyse',
+    "repoLabel": "去 github 给个⭐",
     editLinks: true,
     docsDir: 'docs',
     editLinkText: '在 GitHub 上编辑此页',
