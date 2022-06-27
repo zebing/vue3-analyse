@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ref | vue3 技术原理</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/vue3-analyse/logo.png">
+    <link rel="manifest" href="/vue3-analyse/manifest.json">
+    <meta name="description" content="Analysis vue.js deeply">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="preload" href="/vue3-analyse/assets/css/0.styles.50309fff.css" as="style"><link rel="preload" href="/vue3-analyse/assets/js/app.2540ccca.js" as="script"><link rel="preload" href="/vue3-analyse/assets/js/2.480dc86a.js" as="script"><link rel="preload" href="/vue3-analyse/assets/js/25.7c339184.js" as="script"><link rel="prefetch" href="/vue3-analyse/assets/js/10.890af72f.js"><link rel="prefetch" href="/vue3-analyse/assets/js/11.a64a1d56.js"><link rel="prefetch" href="/vue3-analyse/assets/js/12.fff6875b.js"><link rel="prefetch" href="/vue3-analyse/assets/js/13.15d7cdae.js"><link rel="prefetch" href="/vue3-analyse/assets/js/14.ac707ea5.js"><link rel="prefetch" href="/vue3-analyse/assets/js/15.45b42477.js"><link rel="prefetch" href="/vue3-analyse/assets/js/16.34422e64.js"><link rel="prefetch" href="/vue3-analyse/assets/js/17.b8c68cea.js"><link rel="prefetch" href="/vue3-analyse/assets/js/18.08f1d603.js"><link rel="prefetch" href="/vue3-analyse/assets/js/19.8172c85c.js"><link rel="prefetch" href="/vue3-analyse/assets/js/20.4da9e112.js"><link rel="prefetch" href="/vue3-analyse/assets/js/21.88910034.js"><link rel="prefetch" href="/vue3-analyse/assets/js/22.fe9aa840.js"><link rel="prefetch" href="/vue3-analyse/assets/js/23.4524677f.js"><link rel="prefetch" href="/vue3-analyse/assets/js/24.bf08b81d.js"><link rel="prefetch" href="/vue3-analyse/assets/js/26.df836bb8.js"><link rel="prefetch" href="/vue3-analyse/assets/js/27.88fc1264.js"><link rel="prefetch" href="/vue3-analyse/assets/js/28.512d256c.js"><link rel="prefetch" href="/vue3-analyse/assets/js/29.a610f760.js"><link rel="prefetch" href="/vue3-analyse/assets/js/3.2974a51f.js"><link rel="prefetch" href="/vue3-analyse/assets/js/30.875056f5.js"><link rel="prefetch" href="/vue3-analyse/assets/js/31.23b64847.js"><link rel="prefetch" href="/vue3-analyse/assets/js/4.6badb056.js"><link rel="prefetch" href="/vue3-analyse/assets/js/5.3479a82d.js"><link rel="prefetch" href="/vue3-analyse/assets/js/6.577959b9.js"><link rel="prefetch" href="/vue3-analyse/assets/js/7.b9010532.js"><link rel="prefetch" href="/vue3-analyse/assets/js/8.14eb86c0.js"><link rel="prefetch" href="/vue3-analyse/assets/js/9.8bf7bd14.js">
+    <link rel="stylesheet" href="/vue3-analyse/assets/css/0.styles.50309fff.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vue3-analyse/" class="home-link router-link-active"><!----> <span class="site-name">vue3 技术原理</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"> <a href="https://github.com/zebing/vue3-analyse" target="_blank" rel="noopener noreferrer" class="repo-link">
+    去 github 给个⭐
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"> <a href="https://github.com/zebing/vue3-analyse" target="_blank" rel="noopener noreferrer" class="repo-link">
+    去 github 给个⭐
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/vue3-analyse/" aria-current="page" class="sidebar-link">前言</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>准备工作</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>API</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>响应式</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue3-analyse/03响应式/00introduce.html" class="sidebar-link">介绍</a></li><li><a href="/vue3-analyse/03响应式/01effect.html" class="sidebar-link">effect</a></li><li><a href="/vue3-analyse/03响应式/02reactive.html" class="sidebar-link">reactive</a></li><li><a href="/vue3-analyse/03响应式/03ref.html" class="active sidebar-link">ref</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue3-analyse/03响应式/03ref.html#refimpl" class="sidebar-link">RefImpl</a></li></ul></li><li><a href="/vue3-analyse/03响应式/04computed.html" class="sidebar-link">computed</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="ref"><a href="#ref" class="header-anchor">#</a> ref</h1> <p>接受一个内部值并返回一个响应式且可变的 ref 对象。ref 对象仅有一个 <code>.value</code> 属性，指向该内部值。如果将对象分配为 ref 值，则它将被 reactive 函数处理为深层的响应式对象。</p> <p>示例：</p> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">const</span> count <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>count<span class="token punctuation">.</span>value<span class="token punctuation">)</span> <span class="token comment">// 0</span>
+
+count<span class="token punctuation">.</span>value<span class="token operator">++</span>
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>count<span class="token punctuation">.</span>value<span class="token punctuation">)</span> <span class="token comment">// 1</span>
+</code></pre></div><h2 id="refimpl"><a href="#refimpl" class="header-anchor">#</a> RefImpl</h2> <p>ref 对象没有调用 proxy 进行监控，而是调用了 RefImpl 类创建的实例。</p> <p><a href="https://github.com/vuejs/core/blob/25f7a16a6eccbfa8d857977dcf1f23fb36b830b5/packages/reactivity/src/ref.ts#L97" target="_blank" rel="noopener noreferrer">传送门<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <div class="language- extra-class"><pre class="language-text"><code>export function ref(value?: unknown) {
+  return createRef(value, false)
+}
+
+function createRef(rawValue: unknown, shallow: boolean) {
+  if (isRef(rawValue)) {
+    return rawValue
+  }
+  return new RefImpl(rawValue, shallow)
+}
+
+class RefImpl&lt;T&gt; {
+  private _value: T
+  private _rawValue: T
+
+  public dep?: Dep = undefined
+  public readonly __v_isRef = true
+
+  constructor(value: T, public readonly __v_isShallow: boolean) {
+    this._rawValue = __v_isShallow ? value : toRaw(value)
+    this._value = __v_isShallow ? value : toReactive(value)
+  }
+
+  get value() {
+    trackRefValue(this)
+    return this._value
+  }
+
+  set value(newVal) {
+    newVal = this.__v_isShallow ? newVal : toRaw(newVal)
+    if (hasChanged(newVal, this._rawValue)) {
+      this._rawValue = newVal
+      this._value = this.__v_isShallow ? newVal : toReactive(newVal)
+      triggerRefValue(this, newVal)
+    }
+  }
+}
+</code></pre></div><p>RefImpl 类只有一个支持 get 和 set 方法的 value 属性。</p> <ul><li>在获取 value 值时，会触发 get value 方法，然后在 ref 对象上创建一个 dep 数组，进行依赖搜集。</li> <li>在设置 value 值时，会触发 set value 方法，从而将 dep 中的依赖全部更新</li></ul></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/zebing/vue3-analyse/edit/master/docs/03响应式/03ref.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">6/27/2022, 2:14:22 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue3-analyse/03响应式/02reactive.html" class="prev">
+        reactive
+      </a></span> <span class="next"><a href="/vue3-analyse/03响应式/04computed.html">
+        computed
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/vue3-analyse/assets/js/app.2540ccca.js" defer></script><script src="/vue3-analyse/assets/js/2.480dc86a.js" defer></script><script src="/vue3-analyse/assets/js/25.7c339184.js" defer></script>
+  </body>
+</html>

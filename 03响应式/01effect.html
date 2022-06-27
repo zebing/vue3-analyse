@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>effect | vue3 技术原理</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/vue3-analyse/logo.png">
+    <link rel="manifest" href="/vue3-analyse/manifest.json">
+    <meta name="description" content="Analysis vue.js deeply">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="preload" href="/vue3-analyse/assets/css/0.styles.50309fff.css" as="style"><link rel="preload" href="/vue3-analyse/assets/js/app.2540ccca.js" as="script"><link rel="preload" href="/vue3-analyse/assets/js/2.480dc86a.js" as="script"><link rel="preload" href="/vue3-analyse/assets/js/9.8bf7bd14.js" as="script"><link rel="prefetch" href="/vue3-analyse/assets/js/10.890af72f.js"><link rel="prefetch" href="/vue3-analyse/assets/js/11.a64a1d56.js"><link rel="prefetch" href="/vue3-analyse/assets/js/12.fff6875b.js"><link rel="prefetch" href="/vue3-analyse/assets/js/13.15d7cdae.js"><link rel="prefetch" href="/vue3-analyse/assets/js/14.ac707ea5.js"><link rel="prefetch" href="/vue3-analyse/assets/js/15.45b42477.js"><link rel="prefetch" href="/vue3-analyse/assets/js/16.34422e64.js"><link rel="prefetch" href="/vue3-analyse/assets/js/17.b8c68cea.js"><link rel="prefetch" href="/vue3-analyse/assets/js/18.08f1d603.js"><link rel="prefetch" href="/vue3-analyse/assets/js/19.8172c85c.js"><link rel="prefetch" href="/vue3-analyse/assets/js/20.4da9e112.js"><link rel="prefetch" href="/vue3-analyse/assets/js/21.88910034.js"><link rel="prefetch" href="/vue3-analyse/assets/js/22.fe9aa840.js"><link rel="prefetch" href="/vue3-analyse/assets/js/23.4524677f.js"><link rel="prefetch" href="/vue3-analyse/assets/js/24.bf08b81d.js"><link rel="prefetch" href="/vue3-analyse/assets/js/25.7c339184.js"><link rel="prefetch" href="/vue3-analyse/assets/js/26.df836bb8.js"><link rel="prefetch" href="/vue3-analyse/assets/js/27.88fc1264.js"><link rel="prefetch" href="/vue3-analyse/assets/js/28.512d256c.js"><link rel="prefetch" href="/vue3-analyse/assets/js/29.a610f760.js"><link rel="prefetch" href="/vue3-analyse/assets/js/3.2974a51f.js"><link rel="prefetch" href="/vue3-analyse/assets/js/30.875056f5.js"><link rel="prefetch" href="/vue3-analyse/assets/js/31.23b64847.js"><link rel="prefetch" href="/vue3-analyse/assets/js/4.6badb056.js"><link rel="prefetch" href="/vue3-analyse/assets/js/5.3479a82d.js"><link rel="prefetch" href="/vue3-analyse/assets/js/6.577959b9.js"><link rel="prefetch" href="/vue3-analyse/assets/js/7.b9010532.js"><link rel="prefetch" href="/vue3-analyse/assets/js/8.14eb86c0.js">
+    <link rel="stylesheet" href="/vue3-analyse/assets/css/0.styles.50309fff.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vue3-analyse/" class="home-link router-link-active"><!----> <span class="site-name">vue3 技术原理</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"> <a href="https://github.com/zebing/vue3-analyse" target="_blank" rel="noopener noreferrer" class="repo-link">
+    去 github 给个⭐
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"> <a href="https://github.com/zebing/vue3-analyse" target="_blank" rel="noopener noreferrer" class="repo-link">
+    去 github 给个⭐
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/vue3-analyse/" aria-current="page" class="sidebar-link">前言</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>准备工作</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>API</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>响应式</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue3-analyse/03响应式/00introduce.html" class="sidebar-link">介绍</a></li><li><a href="/vue3-analyse/03响应式/01effect.html" class="active sidebar-link">effect</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue3-analyse/03响应式/01effect.html#初始化阶段" class="sidebar-link">初始化阶段</a></li><li class="sidebar-sub-header"><a href="/vue3-analyse/03响应式/01effect.html#依赖搜集阶段" class="sidebar-link">依赖搜集阶段</a></li><li class="sidebar-sub-header"><a href="/vue3-analyse/03响应式/01effect.html#依赖更新阶段" class="sidebar-link">依赖更新阶段</a></li></ul></li><li><a href="/vue3-analyse/03响应式/02reactive.html" class="sidebar-link">reactive</a></li><li><a href="/vue3-analyse/03响应式/03ref.html" class="sidebar-link">ref</a></li><li><a href="/vue3-analyse/03响应式/04computed.html" class="sidebar-link">computed</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="effect"><a href="#effect" class="header-anchor">#</a> effect</h1> <p>effect 也叫副作用。在 vue 组件中占据着非常重要的作用。effect 的执行过程大概有三个阶段：初始化阶段，依赖搜集阶段和依赖更新阶段。如下图所示：
+<img src="/vue3-analyse/assets/img/3-1.6cb646fd.png" alt="3-1"></p> <h2 id="初始化阶段"><a href="#初始化阶段" class="header-anchor">#</a> 初始化阶段</h2> <p>初始化阶段主要做两件事。一个是初始化组件的数据，比如 data，computed，watch等。调用reactive，computed，watch方法将这些数据添加监控。具体在第二章可以看到，这里不再讲解。另一个是初始化 effect。</p> <p><a href="https://github.com/vuejs/core/blob/bdffc143ef3aa27c347b22f19d0052194b54836e/packages/runtime-core/src/renderer.ts#L1190" target="_blank" rel="noopener noreferrer">传送门<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <div class="language-typescript extra-class"><pre class="language-typescript"><code> <span class="token keyword">const</span> mountComponent<span class="token operator">:</span> <span class="token function-variable function">MountComponentFn</span> <span class="token operator">=</span> <span class="token punctuation">(</span>
+    initialVNode<span class="token punctuation">,</span>
+    container<span class="token punctuation">,</span>
+    anchor<span class="token punctuation">,</span>
+    parentComponent<span class="token punctuation">,</span>
+    parentSuspense<span class="token punctuation">,</span>
+    isSVG<span class="token punctuation">,</span>
+    optimized
+  <span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    
+    <span class="token operator">...</span>
+    
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>__COMPAT__ <span class="token operator">&amp;&amp;</span> compatMountInstance<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">startMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">init</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      <span class="token comment">// 组件初始化</span>
+      <span class="token function">setupComponent</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">endMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">init</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token operator">...</span>
+    
+    <span class="token function">setupRenderEffect</span><span class="token punctuation">(</span>
+      instance<span class="token punctuation">,</span>
+      initialVNode<span class="token punctuation">,</span>
+      container<span class="token punctuation">,</span>
+      anchor<span class="token punctuation">,</span>
+      parentSuspense<span class="token punctuation">,</span>
+      isSVG<span class="token punctuation">,</span>
+      optimized
+    <span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">popWarningContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token function">endMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">mount</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre></div><p>在 patch 到节点是组件时，调用 mountComponent 方法开始初始化。调用 setupComponent 方法初始化数据完成之后，调用 setupRenderEffect 方法初始化 effect。</p> <h3 id="trigger"><a href="#trigger" class="header-anchor">#</a> trigger</h3> <p><a href="https://github.com/vuejs/core/blob/bdffc143ef3aa27c347b22f19d0052194b54836e/packages/runtime-core/src/renderer.ts#L1300" target="_blank" rel="noopener noreferrer">传送门<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <div class="language-typescript extra-class"><pre class="language-typescript"><code>  <span class="token keyword">const</span> setupRenderEffect<span class="token operator">:</span> <span class="token function-variable function">SetupRenderEffectFn</span> <span class="token operator">=</span> <span class="token punctuation">(</span>
+    instance<span class="token punctuation">,</span>
+    initialVNode<span class="token punctuation">,</span>
+    container<span class="token punctuation">,</span>
+    anchor<span class="token punctuation">,</span>
+    parentSuspense<span class="token punctuation">,</span>
+    isSVG<span class="token punctuation">,</span>
+    optimized
+  <span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// effect 回调</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">componentUpdateFn</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 第一次执行</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>instance<span class="token punctuation">.</span>isMounted<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> vnodeHook<span class="token operator">:</span> VNodeHook <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token operator">|</span> <span class="token keyword">undefined</span>
+        <span class="token keyword">const</span> <span class="token punctuation">{</span> el<span class="token punctuation">,</span> props <span class="token punctuation">}</span> <span class="token operator">=</span> initialVNode
+        <span class="token keyword">const</span> <span class="token punctuation">{</span> bm<span class="token punctuation">,</span> m<span class="token punctuation">,</span> parent <span class="token punctuation">}</span> <span class="token operator">=</span> instance
+        <span class="token keyword">const</span> isAsyncWrapperVNode <span class="token operator">=</span> <span class="token function">isAsyncWrapper</span><span class="token punctuation">(</span>initialVNode<span class="token punctuation">)</span>
+
+        <span class="token function">toggleRecurse</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+        <span class="token comment">// 调用 beforeMount 生命周期方法</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>bm<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">invokeArrayFns</span><span class="token punctuation">(</span>bm<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// onVnodeBeforeMount</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>
+          <span class="token operator">!</span>isAsyncWrapperVNode <span class="token operator">&amp;&amp;</span>
+          <span class="token punctuation">(</span>vnodeHook <span class="token operator">=</span> props <span class="token operator">&amp;&amp;</span> props<span class="token punctuation">.</span>onVnodeBeforeMount<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">invokeVNodeHook</span><span class="token punctuation">(</span>vnodeHook<span class="token punctuation">,</span> parent<span class="token punctuation">,</span> initialVNode<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>
+          __COMPAT__ <span class="token operator">&amp;&amp;</span>
+          <span class="token function">isCompatEnabled</span><span class="token punctuation">(</span>DeprecationTypes<span class="token punctuation">.</span><span class="token constant">INSTANCE_EVENT_HOOKS</span><span class="token punctuation">,</span> instance<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          instance<span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token string">'hook:beforeMount'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">toggleRecurse</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+        
+        <span class="token comment">// 服务端渲染</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>el <span class="token operator">&amp;&amp;</span> hydrateNode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment">// vnode has adopted host node - perform hydration instead of mount.</span>
+          <span class="token keyword">const</span> <span class="token function-variable function">hydrateSubTree</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token function">startMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">render</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            instance<span class="token punctuation">.</span>subTree <span class="token operator">=</span> <span class="token function">renderComponentRoot</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token function">endMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">render</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token function">startMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">hydrate</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            hydrateNode<span class="token operator">!</span><span class="token punctuation">(</span>
+              el <span class="token keyword">as</span> Node<span class="token punctuation">,</span>
+              instance<span class="token punctuation">.</span>subTree<span class="token punctuation">,</span>
+              instance<span class="token punctuation">,</span>
+              parentSuspense<span class="token punctuation">,</span>
+              <span class="token keyword">null</span>
+            <span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token function">endMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">hydrate</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>isAsyncWrapperVNode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token punctuation">;</span><span class="token punctuation">(</span>initialVNode<span class="token punctuation">.</span><span class="token keyword">type</span> <span class="token class-name"><span class="token keyword">as</span></span> ComponentOptions<span class="token punctuation">)</span><span class="token punctuation">.</span>__asyncLoader<span class="token operator">!</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>
+              <span class="token comment">// note: we are moving the render call into an async callback,</span>
+              <span class="token comment">// which means it won't track dependencies - but it's ok because</span>
+              <span class="token comment">// a server-rendered async wrapper is already in resolved state</span>
+              <span class="token comment">// and it will never need to change.</span>
+              <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token operator">!</span>instance<span class="token punctuation">.</span>isUnmounted <span class="token operator">&amp;&amp;</span> <span class="token function">hydrateSubTree</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">)</span>
+          <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token function">hydrateSubTree</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+
+        <span class="token comment">// 客户端渲染</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">startMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">render</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+          <span class="token comment">// renderComponentRoot 方法执行组件 render 并返回组件虚拟dom树</span>
+          <span class="token keyword">const</span> subTree <span class="token operator">=</span> <span class="token punctuation">(</span>instance<span class="token punctuation">.</span>subTree <span class="token operator">=</span> <span class="token function">renderComponentRoot</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">endMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">render</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">startMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">patch</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+          
+          <span class="token comment">// diff 子树</span>
+          <span class="token comment">// 初次渲染，旧树为 null</span>
+          <span class="token function">patch</span><span class="token punctuation">(</span>
+            <span class="token keyword">null</span><span class="token punctuation">,</span>
+            subTree<span class="token punctuation">,</span>
+            container<span class="token punctuation">,</span>
+            anchor<span class="token punctuation">,</span>
+            instance<span class="token punctuation">,</span>
+            parentSuspense<span class="token punctuation">,</span>
+            isSVG
+          <span class="token punctuation">)</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">endMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">patch</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+          initialVNode<span class="token punctuation">.</span>el <span class="token operator">=</span> subTree<span class="token punctuation">.</span>el
+        <span class="token punctuation">}</span>
+        <span class="token comment">// 执行 mounted 生命周期</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>m<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">queuePostRenderEffect</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> parentSuspense<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// onVnodeMounted</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>
+          <span class="token operator">!</span>isAsyncWrapperVNode <span class="token operator">&amp;&amp;</span>
+          <span class="token punctuation">(</span>vnodeHook <span class="token operator">=</span> props <span class="token operator">&amp;&amp;</span> props<span class="token punctuation">.</span>onVnodeMounted<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">const</span> scopedInitialVNode <span class="token operator">=</span> initialVNode
+          <span class="token function">queuePostRenderEffect</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">invokeVNodeHook</span><span class="token punctuation">(</span>vnodeHook<span class="token operator">!</span><span class="token punctuation">,</span> parent<span class="token punctuation">,</span> scopedInitialVNode<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            parentSuspense
+          <span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>
+          __COMPAT__ <span class="token operator">&amp;&amp;</span>
+          <span class="token function">isCompatEnabled</span><span class="token punctuation">(</span>DeprecationTypes<span class="token punctuation">.</span><span class="token constant">INSTANCE_EVENT_HOOKS</span><span class="token punctuation">,</span> instance<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">queuePostRenderEffect</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> instance<span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token string">'hook:mounted'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            parentSuspense
+          <span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// activated hook for keep-alive roots.</span>
+        <span class="token comment">// #1742 activated hook must be accessed after first render</span>
+        <span class="token comment">// since the hook may be injected by a child keep-alive</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>initialVNode<span class="token punctuation">.</span>shapeFlag <span class="token operator">&amp;</span> ShapeFlags<span class="token punctuation">.</span><span class="token constant">COMPONENT_SHOULD_KEEP_ALIVE</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          instance<span class="token punctuation">.</span>a <span class="token operator">&amp;&amp;</span> <span class="token function">queuePostRenderEffect</span><span class="token punctuation">(</span>instance<span class="token punctuation">.</span>a<span class="token punctuation">,</span> parentSuspense<span class="token punctuation">)</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>
+            __COMPAT__ <span class="token operator">&amp;&amp;</span>
+            <span class="token function">isCompatEnabled</span><span class="token punctuation">(</span>DeprecationTypes<span class="token punctuation">.</span><span class="token constant">INSTANCE_EVENT_HOOKS</span><span class="token punctuation">,</span> instance<span class="token punctuation">)</span>
+          <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">queuePostRenderEffect</span><span class="token punctuation">(</span>
+              <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> instance<span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token string">'hook:activated'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+              parentSuspense
+            <span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 标记为已挂载，触发依赖更新时，直接走 updateComponent</span>
+        instance<span class="token punctuation">.</span>isMounted <span class="token operator">=</span> <span class="token boolean">true</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__ <span class="token operator">||</span> __FEATURE_PROD_DEVTOOLS__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">devtoolsComponentAdded</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// #2458: deference mount-only object parameters to prevent memleaks</span>
+        initialVNode <span class="token operator">=</span> container <span class="token operator">=</span> anchor <span class="token operator">=</span> <span class="token keyword">null</span> <span class="token keyword">as</span> <span class="token builtin">any</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token comment">// updateComponent</span>
+        <span class="token comment">// This is triggered by mutation of component's own state (next: null)</span>
+        <span class="token comment">// OR parent calling processComponent (next: VNode)</span>
+        <span class="token keyword">let</span> <span class="token punctuation">{</span> next<span class="token punctuation">,</span> bu<span class="token punctuation">,</span> u<span class="token punctuation">,</span> parent<span class="token punctuation">,</span> vnode <span class="token punctuation">}</span> <span class="token operator">=</span> instance
+        <span class="token keyword">let</span> originNext <span class="token operator">=</span> next
+        <span class="token keyword">let</span> vnodeHook<span class="token operator">:</span> VNodeHook <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token operator">|</span> <span class="token keyword">undefined</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">pushWarningContext</span><span class="token punctuation">(</span>next <span class="token operator">||</span> instance<span class="token punctuation">.</span>vnode<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// Disallow component effect recursion during pre-lifecycle hooks.</span>
+        <span class="token function">toggleRecurse</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+        <span class="token comment">// 有 next 说明是非组件自身状态变更导致更新</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          next<span class="token punctuation">.</span>el <span class="token operator">=</span> vnode<span class="token punctuation">.</span>el
+          <span class="token comment">// 更新组件 props，slot 等信息</span>
+          <span class="token function">updateComponentPreRender</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> next<span class="token punctuation">,</span> optimized<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+          next <span class="token operator">=</span> vnode
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// beforeUpdate 生命周期</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>bu<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">invokeArrayFns</span><span class="token punctuation">(</span>bu<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// onVnodeBeforeUpdate</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>vnodeHook <span class="token operator">=</span> next<span class="token punctuation">.</span>props <span class="token operator">&amp;&amp;</span> next<span class="token punctuation">.</span>props<span class="token punctuation">.</span>onVnodeBeforeUpdate<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">invokeVNodeHook</span><span class="token punctuation">(</span>vnodeHook<span class="token punctuation">,</span> parent<span class="token punctuation">,</span> next<span class="token punctuation">,</span> vnode<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>
+          __COMPAT__ <span class="token operator">&amp;&amp;</span>
+          <span class="token function">isCompatEnabled</span><span class="token punctuation">(</span>DeprecationTypes<span class="token punctuation">.</span><span class="token constant">INSTANCE_EVENT_HOOKS</span><span class="token punctuation">,</span> instance<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          instance<span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token string">'hook:beforeUpdate'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">toggleRecurse</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+
+        <span class="token comment">// render</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">startMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">render</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// 调用组件 render 生成组件虚拟dom树</span>
+        <span class="token keyword">const</span> nextTree <span class="token operator">=</span> <span class="token function">renderComponentRoot</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">endMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">render</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">const</span> prevTree <span class="token operator">=</span> instance<span class="token punctuation">.</span>subTree
+        instance<span class="token punctuation">.</span>subTree <span class="token operator">=</span> nextTree
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">startMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">patch</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// diff 新旧两棵树</span>
+        <span class="token function">patch</span><span class="token punctuation">(</span>
+          prevTree<span class="token punctuation">,</span>
+          nextTree<span class="token punctuation">,</span>
+          <span class="token comment">// parent may have changed if it's in a teleport</span>
+          <span class="token function">hostParentNode</span><span class="token punctuation">(</span>prevTree<span class="token punctuation">.</span>el<span class="token operator">!</span><span class="token punctuation">)</span><span class="token operator">!</span><span class="token punctuation">,</span>
+          <span class="token comment">// anchor may have changed if it's in a fragment</span>
+          <span class="token function">getNextHostNode</span><span class="token punctuation">(</span>prevTree<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          instance<span class="token punctuation">,</span>
+          parentSuspense<span class="token punctuation">,</span>
+          isSVG
+        <span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">endMeasure</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">patch</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        next<span class="token punctuation">.</span>el <span class="token operator">=</span> nextTree<span class="token punctuation">.</span>el
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>originNext <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment">// self-triggered update. In case of HOC, update parent component</span>
+          <span class="token comment">// vnode el. HOC is indicated by parent instance's subTree pointing</span>
+          <span class="token comment">// to child component's vnode</span>
+          <span class="token function">updateHOCHostEl</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> nextTree<span class="token punctuation">.</span>el<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// updated hook</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>u<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">queuePostRenderEffect</span><span class="token punctuation">(</span>u<span class="token punctuation">,</span> parentSuspense<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// onVnodeUpdated</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>vnodeHook <span class="token operator">=</span> next<span class="token punctuation">.</span>props <span class="token operator">&amp;&amp;</span> next<span class="token punctuation">.</span>props<span class="token punctuation">.</span>onVnodeUpdated<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">queuePostRenderEffect</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">invokeVNodeHook</span><span class="token punctuation">(</span>vnodeHook<span class="token operator">!</span><span class="token punctuation">,</span> parent<span class="token punctuation">,</span> next<span class="token operator">!</span><span class="token punctuation">,</span> vnode<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            parentSuspense
+          <span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>
+          __COMPAT__ <span class="token operator">&amp;&amp;</span>
+          <span class="token function">isCompatEnabled</span><span class="token punctuation">(</span>DeprecationTypes<span class="token punctuation">.</span><span class="token constant">INSTANCE_EVENT_HOOKS</span><span class="token punctuation">,</span> instance<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">queuePostRenderEffect</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> instance<span class="token punctuation">.</span><span class="token function">emit</span><span class="token punctuation">(</span><span class="token string">'hook:updated'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            parentSuspense
+          <span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__ <span class="token operator">||</span> __FEATURE_PROD_DEVTOOLS__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">devtoolsComponentUpdated</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">popWarningContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// create reactive effect for rendering</span>
+    <span class="token keyword">const</span> effect <span class="token operator">=</span> <span class="token punctuation">(</span>instance<span class="token punctuation">.</span>effect <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReactiveEffect</span><span class="token punctuation">(</span>
+      componentUpdateFn<span class="token punctuation">,</span>
+      <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">queueJob</span><span class="token punctuation">(</span>instance<span class="token punctuation">.</span>update<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      instance<span class="token punctuation">.</span>scope <span class="token comment">// track it in component's effect scope</span>
+    <span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> update <span class="token operator">=</span> <span class="token punctuation">(</span>instance<span class="token punctuation">.</span>update <span class="token operator">=</span> effect<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>effect<span class="token punctuation">)</span> <span class="token keyword">as</span> SchedulerJob<span class="token punctuation">)</span>
+    update<span class="token punctuation">.</span>id <span class="token operator">=</span> instance<span class="token punctuation">.</span>uid
+    <span class="token comment">// allowRecurse</span>
+    <span class="token comment">// #1801, #2043 component render effects should allow recursive updates</span>
+    <span class="token function">toggleRecurse</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      effect<span class="token punctuation">.</span>onTrack <span class="token operator">=</span> instance<span class="token punctuation">.</span>rtc
+        <span class="token operator">?</span> e <span class="token operator">=&gt;</span> <span class="token function">invokeArrayFns</span><span class="token punctuation">(</span>instance<span class="token punctuation">.</span>rtc<span class="token operator">!</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token keyword">void</span> <span class="token number">0</span>
+      effect<span class="token punctuation">.</span>onTrigger <span class="token operator">=</span> instance<span class="token punctuation">.</span>rtg
+        <span class="token operator">?</span> e <span class="token operator">=&gt;</span> <span class="token function">invokeArrayFns</span><span class="token punctuation">(</span>instance<span class="token punctuation">.</span>rtg<span class="token operator">!</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token keyword">void</span> <span class="token number">0</span>
+      <span class="token comment">// @ts-ignore (for scheduler)</span>
+      update<span class="token punctuation">.</span>ownerInstance <span class="token operator">=</span> instance
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 立即执行 update -&gt; run -&gt; render -&gt; patch</span>
+    <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+</code></pre></div><p>这里传入 componentUpdateFn 回调函数 new ReactiveEffect，生成 effect实例，并立即执行 effect.run 触发 componentUpdateFn 执行。</p> <p>componentUpdateFn 方法中有两个部分，一个是初次渲染，一个是组件更新。</p> <p><strong>初次渲染</strong></p> <ol><li>执行 beforeMount 生命周期函数。</li> <li>调用 renderComponentRoot 方法 去执行组件的 render 函数，从而触发组件依赖搜集并获取组件的虚拟 dom 树。</li> <li>patch 虚拟 dom 子节点，由于是初次渲染，所以旧节点为 null。新节点直接挂载。</li> <li>执行 mounted 生命周期函数。</li> <li>标记组件已渲染过 <code>instance.isMounted = true</code>，下次直接更新。</li></ol> <p><strong>组件更新</strong></p> <ol><li>判断 next 非空，则说明是父组件更新引起的，调用 updateComponentPreRender 方法更新 props，slots等。</li> <li>执行 beforeUpdate 生命周期函数。</li> <li>调用 renderComponentRoot 方法 去执行组件的 render 函数，从而触发组件依赖搜集并获取组件的虚拟 dom 树。</li> <li>patch diff 新旧两棵虚拟 dom 树。</li> <li>执行 updated 生命周期函数。</li></ol> <h2 id="依赖搜集阶段"><a href="#依赖搜集阶段" class="header-anchor">#</a> 依赖搜集阶段</h2> <p>在组件执行 render 函数的时候，会从组件实例获取数据，从而触发监控数据的 getter 方法，在 getter 里面会执行 track 方法进行依赖搜集。依赖会保存在 targetMap 全局变量中。</p> <h3 id="track"><a href="#track" class="header-anchor">#</a> track</h3> <div class="language-typescript extra-class"><pre class="language-typescript"><code>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">track</span><span class="token punctuation">(</span>target<span class="token operator">:</span> object<span class="token punctuation">,</span> type<span class="token operator">:</span> TrackOpTypes<span class="token punctuation">,</span> key<span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 限制是否允许 track</span>
+  <span class="token comment">// shouldTrack 限制是否可以搜集依赖，由 pauseTracking 和 resetTracking 方法切换它的值</span>
+  <span class="token comment">// activeEffect 当前 effect</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>shouldTrack <span class="token operator">&amp;&amp;</span> activeEffect<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> depsMap <span class="token operator">=</span> targetMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span>
+    <span class="token comment">// target 未被搜集过，初始化</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>depsMap<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      targetMap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> <span class="token punctuation">(</span>depsMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">let</span> dep <span class="token operator">=</span> depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    <span class="token comment">// target key 未被搜集过， 初始化</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dep<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      depsMap<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token punctuation">(</span>dep <span class="token operator">=</span> <span class="token function">createDep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> eventInfo <span class="token operator">=</span> __DEV__
+      <span class="token operator">?</span> <span class="token punctuation">{</span> effect<span class="token operator">:</span> activeEffect<span class="token punctuation">,</span> target<span class="token punctuation">,</span> type<span class="token punctuation">,</span> key <span class="token punctuation">}</span>
+      <span class="token operator">:</span> <span class="token keyword">undefined</span>
+
+    <span class="token function">trackEffects</span><span class="token punctuation">(</span>dep<span class="token punctuation">,</span> eventInfo<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">trackEffects</span><span class="token punctuation">(</span>
+  dep<span class="token operator">:</span> Dep<span class="token punctuation">,</span>
+  debuggerEventExtraInfo<span class="token operator">?</span><span class="token operator">:</span> DebuggerEventExtraInfo
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> shouldTrack <span class="token operator">=</span> <span class="token boolean">false</span>
+  <span class="token comment">// effectTrackDepth 正在递归 track effect 的数量</span>
+  <span class="token comment">// maxMarkerBits </span>
+  <span class="token comment">// 比特式轨迹标记最多支持30级递归。</span>
+  <span class="token comment">// 选择这个值是为了让现代JS引擎在所有平台上使用SMI。</span>
+  <span class="token comment">// 当递归深度更大时，回落到使用完全清理。</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>effectTrackDepth <span class="token operator">&lt;=</span> maxMarkerBits<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">newTracked</span><span class="token punctuation">(</span>dep<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      dep<span class="token punctuation">.</span>n <span class="token operator">|=</span> trackOpBit <span class="token comment">// set newly tracked</span>
+      shouldTrack <span class="token operator">=</span> <span class="token operator">!</span><span class="token function">wasTracked</span><span class="token punctuation">(</span>dep<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 使用完全清理.</span>
+    shouldTrack <span class="token operator">=</span> <span class="token operator">!</span>dep<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>activeEffect<span class="token operator">!</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>shouldTrack<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 搜集依赖</span>
+    dep<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>activeEffect<span class="token operator">!</span><span class="token punctuation">)</span>
+    activeEffect<span class="token operator">!</span><span class="token punctuation">.</span>deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dep<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__ <span class="token operator">&amp;&amp;</span> activeEffect<span class="token operator">!</span><span class="token punctuation">.</span>onTrack<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      activeEffect<span class="token operator">!</span><span class="token punctuation">.</span><span class="token function">onTrack</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        effect<span class="token operator">:</span> activeEffect<span class="token operator">!</span><span class="token punctuation">,</span>
+        <span class="token operator">...</span>debuggerEventExtraInfo<span class="token operator">!</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>当调用 track 方法搜集依赖时，首先查询当前 target key 是否已经被搜集过，如果没有，则搜集，否则忽略。依赖全部保存在 targetMap 全局变量中。</p> <h2 id="依赖更新阶段"><a href="#依赖更新阶段" class="header-anchor">#</a> 依赖更新阶段</h2> <p>当我们执行某个动作更新了组件数据之后，将会触发监控数据的 setter 方法。在 setter 方法中会调用 trigger 函数进行依赖更新。</p> <p><a href="https://github.com/vuejs/core/blob/bdffc143ef3aa27c347b22f19d0052194b54836e/packages/reactivity/src/effect.ts#L259" target="_blank" rel="noopener noreferrer">传送门<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">trigger</span><span class="token punctuation">(</span>
+  target<span class="token operator">:</span> object<span class="token punctuation">,</span>
+  type<span class="token operator">:</span> TriggerOpTypes<span class="token punctuation">,</span>
+  key<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">,</span>
+  newValue<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">,</span>
+  oldValue<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">,</span>
+  oldTarget<span class="token operator">?</span><span class="token operator">:</span> Map<span class="token operator">&lt;</span><span class="token builtin">unknown</span><span class="token punctuation">,</span> <span class="token builtin">unknown</span><span class="token operator">&gt;</span> <span class="token operator">|</span> Set<span class="token operator">&lt;</span><span class="token builtin">unknown</span><span class="token operator">&gt;</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> depsMap <span class="token operator">=</span> targetMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span>
+  <span class="token comment">// target 不存在依赖时，直接终止</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>depsMap<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// never been tracked</span>
+    <span class="token keyword">return</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">let</span> deps<span class="token operator">:</span> <span class="token punctuation">(</span>Dep <span class="token operator">|</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">===</span> TriggerOpTypes<span class="token punctuation">.</span><span class="token constant">CLEAR</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// collection being cleared</span>
+    <span class="token comment">// trigger all effects for target</span>
+    deps <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>depsMap<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token operator">===</span> <span class="token string">'length'</span> <span class="token operator">&amp;&amp;</span> <span class="token function">isArray</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    depsMap<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>dep<span class="token punctuation">,</span> key<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token operator">===</span> <span class="token string">'length'</span> <span class="token operator">||</span> key <span class="token operator">&gt;=</span> <span class="token punctuation">(</span>newValue <span class="token keyword">as</span> <span class="token builtin">number</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dep<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment">// schedule runs for SET | ADD | DELETE</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token operator">!==</span> <span class="token keyword">void</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// also run for iteration key on ADD | DELETE | Map.SET</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">case</span> TriggerOpTypes<span class="token punctuation">.</span><span class="token constant">ADD</span><span class="token operator">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isArray</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token constant">ITERATE_KEY</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isMap</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token constant">MAP_KEY_ITERATE_KEY</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isIntegerKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token comment">// new index added to array -&gt; length changes</span>
+          deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'length'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span>
+      <span class="token keyword">case</span> TriggerOpTypes<span class="token punctuation">.</span><span class="token constant">DELETE</span><span class="token operator">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isArray</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token constant">ITERATE_KEY</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isMap</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token constant">MAP_KEY_ITERATE_KEY</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span>
+      <span class="token keyword">case</span> TriggerOpTypes<span class="token punctuation">.</span><span class="token constant">SET</span><span class="token operator">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isMap</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token constant">ITERATE_KEY</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">const</span> eventInfo <span class="token operator">=</span> __DEV__
+    <span class="token operator">?</span> <span class="token punctuation">{</span> target<span class="token punctuation">,</span> type<span class="token punctuation">,</span> key<span class="token punctuation">,</span> newValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">,</span> oldTarget <span class="token punctuation">}</span>
+    <span class="token operator">:</span> <span class="token keyword">undefined</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>deps<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>deps<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">triggerEffects</span><span class="token punctuation">(</span>deps<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> eventInfo<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">triggerEffects</span><span class="token punctuation">(</span>deps<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> effects<span class="token operator">:</span> ReactiveEffect<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> dep <span class="token keyword">of</span> deps<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>dep<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        effects<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">...</span>dep<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">triggerEffects</span><span class="token punctuation">(</span><span class="token function">createDep</span><span class="token punctuation">(</span>effects<span class="token punctuation">)</span><span class="token punctuation">,</span> eventInfo<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token function">triggerEffects</span><span class="token punctuation">(</span><span class="token function">createDep</span><span class="token punctuation">(</span>effects<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">triggerEffects</span><span class="token punctuation">(</span>
+  dep<span class="token operator">:</span> Dep <span class="token operator">|</span> ReactiveEffect<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  debuggerEventExtraInfo<span class="token operator">?</span><span class="token operator">:</span> DebuggerEventExtraInfo
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// spread into array for stabilization</span>
+  <span class="token keyword">const</span> effects <span class="token operator">=</span> <span class="token function">isArray</span><span class="token punctuation">(</span>dep<span class="token punctuation">)</span> <span class="token operator">?</span> dep <span class="token operator">:</span> <span class="token punctuation">[</span><span class="token operator">...</span>dep<span class="token punctuation">]</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> effect <span class="token keyword">of</span> effects<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>effect<span class="token punctuation">.</span>computed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">triggerEffect</span><span class="token punctuation">(</span>effect<span class="token punctuation">,</span> debuggerEventExtraInfo<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> effect <span class="token keyword">of</span> effects<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>effect<span class="token punctuation">.</span>computed<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">triggerEffect</span><span class="token punctuation">(</span>effect<span class="token punctuation">,</span> debuggerEventExtraInfo<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">triggerEffect</span><span class="token punctuation">(</span>
+  effect<span class="token operator">:</span> ReactiveEffect<span class="token punctuation">,</span>
+  debuggerEventExtraInfo<span class="token operator">?</span><span class="token operator">:</span> DebuggerEventExtraInfo
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>effect <span class="token operator">!==</span> activeEffect <span class="token operator">||</span> effect<span class="token punctuation">.</span>allowRecurse<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>__DEV__ <span class="token operator">&amp;&amp;</span> effect<span class="token punctuation">.</span>onTrigger<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      effect<span class="token punctuation">.</span><span class="token function">onTrigger</span><span class="token punctuation">(</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span> effect <span class="token punctuation">}</span><span class="token punctuation">,</span> debuggerEventExtraInfo<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>effect<span class="token punctuation">.</span>scheduler<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      effect<span class="token punctuation">.</span><span class="token function">scheduler</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      effect<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>当触发 trigger 方法之后，先通过 target key 从 targetMap 拿到依赖列表 deps。然后先执行所有 computed 类型的 effect 更新，然后执行非 computed 类型的 effect 更新。</p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/zebing/vue3-analyse/edit/master/docs/03响应式/01effect.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">6/27/2022, 2:14:22 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue3-analyse/03响应式/00introduce.html" class="prev">
+        介绍
+      </a></span> <span class="next"><a href="/vue3-analyse/03响应式/02reactive.html">
+        reactive
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/vue3-analyse/assets/js/app.2540ccca.js" defer></script><script src="/vue3-analyse/assets/js/2.480dc86a.js" defer></script><script src="/vue3-analyse/assets/js/9.8bf7bd14.js" defer></script>
+  </body>
+</html>
